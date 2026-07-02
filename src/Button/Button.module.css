@@ -1,0 +1,100 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--do-space-2);
+  border: 1px solid transparent;
+  border-radius: var(--do-radius-md);
+  font-family: var(--do-font-sans);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--do-duration-fast) var(--do-ease-standard),
+    border-color var(--do-duration-fast) var(--do-ease-standard),
+    color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────── */
+.m {
+  height: 40px;
+  padding: 0 var(--do-space-4);
+  font-size: var(--do-font-size-sm);
+}
+.l {
+  height: 48px;
+  padding: 0 var(--do-space-5);
+  font-size: var(--do-font-size-md);
+}
+.xl {
+  height: 56px;
+  padding: 0 var(--do-space-6);
+  font-size: var(--do-font-size-lg);
+  border-radius: var(--do-radius-lg);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Variant: primary (solid celadon — "Найти") ─────────────────────────────── */
+.primary {
+  background-color: var(--do-color-primary);
+  color: var(--do-color-on-primary);
+}
+.primary:hover:not(:disabled) {
+  background-color: var(--do-color-primary-hover);
+}
+.primary:active:not(:disabled) {
+  background-color: var(--do-color-primary-active);
+}
+
+/* ── Variant: secondary (bordered surface — "В словарь") ─────────────────────── */
+.secondary {
+  background-color: var(--do-color-surface);
+  color: var(--do-color-text);
+  border-color: var(--do-color-border-strong);
+}
+.secondary:hover:not(:disabled) {
+  background-color: var(--do-color-bg);
+  border-color: var(--do-color-text-subtle);
+}
+.secondary:active:not(:disabled) {
+  background-color: var(--do-neutral-200);
+}
+
+/* ── Variant: accent (solid terracotta) ─────────────────────────────────────── */
+.accent {
+  background-color: var(--do-color-accent);
+  color: var(--do-color-on-accent);
+}
+.accent:hover:not(:disabled) {
+  background-color: var(--do-color-accent-hover);
+}
+.accent:active:not(:disabled) {
+  background-color: var(--do-color-accent-active);
+}
+
+/* ── Variant: ghost (text only) ─────────────────────────────────────────────── */
+.ghost {
+  background-color: transparent;
+  color: var(--do-color-primary);
+}
+.ghost:hover:not(:disabled) {
+  background-color: var(--do-color-primary-subtle);
+}
+.ghost:active:not(:disabled) {
+  background-color: var(--do-celadon-100);
+}

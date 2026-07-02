@@ -1,0 +1,90 @@
+/**
+ * Designoslav color tokens — "Celadon Zen": soft warm neutrals, one deep green
+ * accent (celadon), one warm accent (terracotta).
+ *
+ * Two layers:
+ *   1. Palette (--do-<hue>-<step>) — raw, fixed values. Do not use these directly
+ *      in components; they exist so semantic tokens have something to point at.
+ *   2. Semantic (--do-color-*) — role-based. Components read ONLY these, so the
+ *      palette can be retuned (or themed) without touching component CSS.
+ *
+ * The five anchors come straight from the Celadon Zen board:
+ *   Фон #EFF1EC · Карта #FAFBF8 · Уголь #23282A · Селадон #2F6E63 · Терракота #B06E3D
+ *
+ * Keep this in sync with colors.ts.
+ */
+
+:root {
+  /* ── Palette: neutral (warm grey-green) ─────────────────────────────────── */
+  --do-neutral-0: #ffffff;
+  --do-neutral-50: #fafbf8; /* Карта / card surface */
+  --do-neutral-100: #eff1ec; /* Фон / canvas background */
+  --do-neutral-200: #e3e6df;
+  --do-neutral-300: #cdd1c9;
+  --do-neutral-400: #aeb3ab;
+  --do-neutral-500: #878c86;
+  --do-neutral-600: #656a65;
+  --do-neutral-700: #4a4f4c;
+  --do-neutral-800: #363b39;
+  --do-neutral-900: #23282a; /* Уголь / ink */
+  --do-neutral-950: #171b1c;
+
+  /* ── Palette: celadon (primary green accent) ────────────────────────────── */
+  --do-celadon-50: #eaf2f0;
+  --do-celadon-100: #d3e4e0;
+  --do-celadon-200: #a9ccc4;
+  --do-celadon-300: #7db2a7;
+  --do-celadon-400: #52958a;
+  --do-celadon-500: #2f6e63; /* Селадон / base */
+  --do-celadon-600: #285e54;
+  --do-celadon-700: #214e46;
+  --do-celadon-800: #1a3e38;
+  --do-celadon-900: #122c28;
+
+  /* ── Palette: terracotta (warm secondary accent) ────────────────────────── */
+  --do-terracotta-50: #f7ede4;
+  --do-terracotta-100: #edd7c4;
+  --do-terracotta-200: #ddb595;
+  --do-terracotta-300: #cb9267;
+  --do-terracotta-400: #bc7e4e;
+  --do-terracotta-500: #b06e3d; /* Терракота / base */
+  --do-terracotta-600: #965b31;
+  --do-terracotta-700: #774828;
+  --do-terracotta-800: #58351e;
+  --do-terracotta-900: #3b2414;
+
+  /* ── Palette: parts-of-speech accents (from the "единый строй" dots) ─────── */
+  --do-pos-noun: #46606e; /* Сущ. — slate blue */
+  --do-pos-verb: #2f6e63; /* Глагол — celadon */
+  --do-pos-particle: #b06e3d; /* Частица — terracotta */
+  --do-pos-pronoun: #6e5f7e; /* Местоим. — muted plum */
+
+  /* ── Semantic: surfaces & text ──────────────────────────────────────────── */
+  --do-color-bg: var(--do-neutral-100);
+  --do-color-surface: var(--do-neutral-50);
+  --do-color-surface-raised: var(--do-neutral-0);
+  --do-color-border: var(--do-neutral-200);
+  --do-color-border-strong: var(--do-neutral-300);
+
+  --do-color-text: var(--do-neutral-900);
+  --do-color-text-muted: var(--do-neutral-600);
+  --do-color-text-subtle: var(--do-neutral-500);
+  --do-color-text-inverse: var(--do-neutral-50);
+
+  /* ── Semantic: primary (celadon) ────────────────────────────────────────── */
+  --do-color-primary: var(--do-celadon-500);
+  --do-color-primary-hover: var(--do-celadon-600);
+  --do-color-primary-active: var(--do-celadon-700);
+  --do-color-primary-subtle: var(--do-celadon-50);
+  --do-color-on-primary: var(--do-neutral-50);
+
+  /* ── Semantic: accent (terracotta) ──────────────────────────────────────── */
+  --do-color-accent: var(--do-terracotta-500);
+  --do-color-accent-hover: var(--do-terracotta-600);
+  --do-color-accent-active: var(--do-terracotta-700);
+  --do-color-accent-subtle: var(--do-terracotta-50);
+  --do-color-on-accent: var(--do-neutral-50);
+
+  /* ── Semantic: focus ring ───────────────────────────────────────────────── */
+  --do-color-focus-ring: var(--do-celadon-400);
+}
