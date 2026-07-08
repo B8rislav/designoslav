@@ -1,0 +1,113 @@
+.card {
+  /* Accent color, overridden per part of speech; neutral when POS is unknown. */
+  --_accent: var(--do-color-border-strong);
+
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-4);
+  width: 100%;
+  padding: var(--do-space-3) var(--do-space-4);
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-sm);
+  font-family: var(--do-font-sans);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color var(--do-duration-fast) var(--do-ease-standard),
+    box-shadow var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.card:hover:not(:disabled) {
+  border-color: var(--_accent);
+  box-shadow: var(--do-shadow-md);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Part-of-speech accents ─────────────────────────────────────────────────── */
+.noun {
+  --_accent: var(--do-color-pos-noun);
+}
+.verb {
+  --_accent: var(--do-color-pos-verb);
+}
+.particle {
+  --_accent: var(--do-color-pos-particle);
+}
+.pronoun {
+  --_accent: var(--do-color-pos-pronoun);
+}
+
+/* ── Left accent bar ────────────────────────────────────────────────────────── */
+.accent {
+  flex: none;
+  align-self: stretch;
+  width: 3px;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--_accent);
+}
+
+/* ── Headword + furigana ────────────────────────────────────────────────────── */
+.headwordBlock {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--do-space-1);
+  min-width: 2.5rem;
+}
+
+.reading {
+  font-size: var(--do-font-size-xs);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text-muted);
+}
+
+.headword {
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-xl);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text);
+}
+
+/* ── Meaning ────────────────────────────────────────────────────────────────── */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-1);
+  min-width: 0;
+}
+
+.posLabel {
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--_accent);
+}
+
+.gloss {
+  font-size: var(--do-font-size-md);
+  line-height: var(--do-line-height-normal);
+  color: var(--do-color-text);
+}
+
+/* ── Trailing Japanese POS tag ──────────────────────────────────────────────── */
+.posTag {
+  flex: none;
+  margin-inline-start: auto;
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-sm);
+  color: var(--do-color-text-subtle);
+}

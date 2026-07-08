@@ -85,6 +85,12 @@
   --do-color-accent-subtle: var(--do-terracotta-50);
   --do-color-on-accent: var(--do-neutral-50);
 
+  /* ── Semantic: parts-of-speech accents ──────────────────────────────────── */
+  --do-color-pos-noun: var(--do-pos-noun);
+  --do-color-pos-verb: var(--do-pos-verb);
+  --do-color-pos-particle: var(--do-pos-particle);
+  --do-color-pos-pronoun: var(--do-pos-pronoun);
+
   /* ── Semantic: focus ring ───────────────────────────────────────────────── */
   --do-color-focus-ring: var(--do-celadon-400);
 }

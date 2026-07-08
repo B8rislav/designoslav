@@ -1,0 +1,72 @@
+.track {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--do-space-1);
+  background-color: var(--do-color-border);
+  border-radius: var(--do-radius-pill);
+  padding: 3px;
+}
+
+.track.fullWidth {
+  display: flex;
+  width: 100%;
+}
+
+.track.disabled {
+  opacity: 0.5;
+}
+
+.segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--do-radius-pill);
+  background-color: transparent;
+  color: var(--do-color-text-muted);
+  font-family: var(--do-font-sans);
+  font-weight: var(--do-font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--do-duration-fast) var(--do-ease-standard),
+    color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.fullWidth .segment {
+  flex: 1;
+}
+
+.segment:hover:not(:disabled):not(.selected) {
+  color: var(--do-color-text);
+}
+
+.segment:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.segment:disabled {
+  cursor: not-allowed;
+}
+
+.segment.selected {
+  background-color: var(--do-color-primary);
+  color: var(--do-color-on-primary);
+  box-shadow: var(--do-shadow-sm);
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────── */
+.m .segment {
+  height: 32px;
+  padding: 0 var(--do-space-4);
+  font-size: var(--do-font-size-sm);
+}
+
+.l .segment {
+  height: 40px;
+  padding: 0 var(--do-space-5);
+  font-size: var(--do-font-size-md);
+}

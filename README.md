@@ -7,6 +7,15 @@ the jpdict frontend.
 Standalone React 19 + TypeScript component library, documented in Storybook.
 Styling is CSS Modules + `--do-*` design tokens; components are presentational only.
 
+Consumed by the **jpdict frontend** — https://github.com/B8rislav/jpdict — which it
+exists to move off Gravity UI. It ships **as source** (no build step): consumers import
+straight from `src` via the `exports` map in `package.json`.
+
+## Docs
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — setup and conventions for contributors.
+- [CLAUDE.md](CLAUDE.md) — condensed guidance for AI agents working in this repo.
+
 ## Commands
 
 | Command | What it does |
