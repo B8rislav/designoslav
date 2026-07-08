@@ -1,0 +1,21 @@
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-3);
+  margin: 0;
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-xl);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text);
+}
+
+.heading::before {
+  content: '';
+  flex: none;
+  align-self: stretch;
+  width: 4px;
+  min-height: 1.1em;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-primary);
+}

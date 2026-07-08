@@ -18,6 +18,8 @@ export interface EntryCardProps extends ButtonHTMLAttributes<HTMLButtonElement> 
   posTag?: ReactNode;
   /** The gloss / meaning, e.g. "я, 1-е лицо". */
   gloss: ReactNode;
+  /** Highlight this card as the active entry (celadon border + tint). */
+  selected?: boolean;
 }
 
 /**
@@ -29,13 +31,37 @@ export interface EntryCardProps extends ButtonHTMLAttributes<HTMLButtonElement> 
  * Presentational only: it holds no state and does not know what a click does.
  */
 export const EntryCard = forwardRef<HTMLButtonElement, EntryCardProps>(function EntryCard(
-  { headword, reading, pos, posLabel, posTag, gloss, type = 'button', className, ...rest },
+  {
+    headword,
+    reading,
+    pos,
+    posLabel,
+    posTag,
+    gloss,
+    selected = false,
+    type = 'button',
+    className,
+    ...rest
+  },
   ref,
 ) {
-  const classes = [styles.card, pos ? styles[pos] : '', className ?? ''].filter(Boolean).join(' ');
+  const classes = [
+    styles.card,
+    pos ? styles[pos] : '',
+    selected ? styles.selected : '',
+    className ?? '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <button ref={ref} type={type} className={classes} {...rest}>
+    <button
+      ref={ref}
+      type={type}
+      className={classes}
+      aria-current={selected || undefined}
+      {...rest}
+    >
       <span className={styles.accent} aria-hidden="true" />
       <span className={styles.headwordBlock}>
         {reading != null && <span className={styles.reading}>{reading}</span>}

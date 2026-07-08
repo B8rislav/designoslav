@@ -13,3 +13,12 @@ export type { ToggleGroupProps, ToggleGroupOption, ToggleGroupSize } from './Tog
 
 export { EntryCard } from './EntryCard';
 export type { EntryCardProps, EntryPartOfSpeech } from './EntryCard';
+
+export { EntryList } from './EntryList';
+export type { EntryListProps, EntryListItem } from './EntryList';
+
+export { SectionHeading } from './SectionHeading';
+export type { SectionHeadingProps } from './SectionHeading';
+
+export { SentenceView } from './SentenceView';
+export type { SentenceViewProps, SentenceToken } from './SentenceView';

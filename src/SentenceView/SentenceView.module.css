@@ -1,0 +1,60 @@
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--do-space-2);
+  padding: var(--do-space-4) var(--do-space-5);
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-sm);
+}
+
+.token {
+  /* Accent color, overridden per part of speech; ink when POS is unknown. */
+  --_accent: var(--do-color-text);
+
+  display: inline-flex;
+  padding: var(--do-space-1) var(--do-space-2);
+  border: none;
+  border-bottom: 2px solid var(--_accent);
+  border-radius: var(--do-radius-sm) var(--do-radius-sm) 0 0;
+  background-color: transparent;
+  color: var(--_accent);
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-xl);
+  line-height: var(--do-line-height-tight);
+  cursor: pointer;
+  transition:
+    background-color var(--do-duration-fast) var(--do-ease-standard),
+    border-color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.token:hover:not(.selected) {
+  background-color: var(--do-color-bg);
+}
+
+.token:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.token.selected {
+  border-bottom-color: transparent;
+  border-radius: var(--do-radius-sm);
+  background-color: var(--do-color-border);
+}
+
+/* ── Part-of-speech accents ─────────────────────────────────────────────────── */
+.noun {
+  --_accent: var(--do-color-pos-noun);
+}
+.verb {
+  --_accent: var(--do-color-pos-verb);
+}
+.particle {
+  --_accent: var(--do-color-pos-particle);
+}
+.pronoun {
+  --_accent: var(--do-color-pos-pronoun);
+}
