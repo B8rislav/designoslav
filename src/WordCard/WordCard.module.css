@@ -1,0 +1,222 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-sm);
+  font-family: var(--do-font-sans);
+  color: var(--do-color-text);
+  overflow: hidden;
+}
+
+/* ── Header: word · POS + reading · play ────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--do-space-4);
+  padding: var(--do-space-5);
+}
+
+.word {
+  flex: none;
+  font-family: var(--do-font-cjk);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--do-color-text);
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-1);
+  min-width: 0;
+  padding-top: var(--do-space-1);
+}
+
+.pos {
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--do-color-text-subtle);
+}
+
+.reading {
+  font-size: var(--do-font-size-md);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text-muted);
+}
+
+.play {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-inline-start: auto;
+  padding: 0;
+  border: 1px solid var(--do-color-border-strong);
+  border-radius: var(--do-radius-md);
+  background-color: var(--do-color-surface);
+  color: var(--do-color-primary);
+  cursor: pointer;
+  transition:
+    background-color var(--do-duration-fast) var(--do-ease-standard),
+    border-color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.play:hover {
+  background-color: var(--do-color-primary-subtle);
+  border-color: var(--do-color-primary);
+}
+
+.play:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Collapsible sections ────────────────────────────────────────────────────────── */
+.sections {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--do-color-border);
+}
+
+.section + .section {
+  border-top: 1px solid var(--do-color-border);
+}
+
+.sectionHeading {
+  margin: 0;
+}
+
+.sectionTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--do-space-3);
+  width: 100%;
+  padding: var(--do-space-3) var(--do-space-5);
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--do-font-size-md);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text);
+  text-align: start;
+  cursor: pointer;
+}
+
+.sectionTrigger:hover .sectionTitle {
+  color: var(--do-color-primary-hover);
+}
+
+.sectionTrigger:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: -2px;
+  border-radius: var(--do-radius-sm);
+}
+
+/* Open sections mark their title in celadon. */
+.sectionTrigger[aria-expanded='true'] .sectionTitle {
+  color: var(--do-color-primary);
+}
+
+.sectionChevron {
+  flex: none;
+  color: var(--do-color-text-subtle);
+  transition: transform var(--do-duration-normal) var(--do-ease-standard);
+}
+
+.sectionTrigger[aria-expanded='false'] .sectionChevron {
+  transform: rotate(180deg);
+}
+
+.sectionContent {
+  padding: 0 var(--do-space-5) var(--do-space-4);
+  font-size: var(--do-font-size-md);
+  line-height: var(--do-line-height-normal);
+  color: var(--do-color-text);
+}
+
+/* A bare list in the content gets celadon markers, matching jpdict's senses. */
+.sectionContent ol,
+.sectionContent ul {
+  margin: 0;
+  padding-inline-start: var(--do-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-1);
+}
+
+.sectionContent li::marker {
+  color: var(--do-color-primary);
+  font-size: var(--do-font-size-sm);
+}
+
+/* ── Kanji-in-word list ──────────────────────────────────────────────────────────── */
+.kanjiSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-3);
+  padding: var(--do-space-5);
+  border-top: 1px solid var(--do-color-border);
+  background-color: var(--do-color-bg);
+}
+
+.kanjiHeading {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-2);
+  margin: 0;
+}
+
+.kanjiHeading::before {
+  content: '';
+  flex: none;
+  align-self: stretch;
+  width: 4px;
+  min-height: 1em;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-primary);
+}
+
+.kanjiLabel {
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--do-color-text-muted);
+}
+
+.kanjiCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 var(--do-space-1);
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-border);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  color: var(--do-color-text-muted);
+}
+
+.kanjiList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-3);
+}
+
+/* ── Footer action ──────────────────────────────────────────────────────────────── */
+.action {
+  display: flex;
+  padding: var(--do-space-5);
+  border-top: 1px solid var(--do-color-border);
+}

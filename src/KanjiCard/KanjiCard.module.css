@@ -1,0 +1,262 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-5);
+  padding: var(--do-space-5);
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-sm);
+  font-family: var(--do-font-sans);
+  color: var(--do-color-text);
+}
+
+/* ── Header: kanji · meaning + reading summary · JLPT badge · toggle ─────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--do-space-4);
+}
+
+.kanji {
+  flex: none;
+  font-family: var(--do-font-cjk);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--do-color-text);
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-1);
+  min-width: 0;
+  padding-top: var(--do-space-1);
+}
+
+.meaning {
+  font-size: var(--do-font-size-lg);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text);
+}
+
+.readingSummary {
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-sm);
+  line-height: var(--do-line-height-normal);
+  color: var(--do-color-text-muted);
+}
+
+.headerAside {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-2);
+  margin-inline-start: auto;
+}
+
+.jlpt {
+  flex: none;
+  padding: var(--do-space-1) var(--do-space-2);
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-primary-subtle);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  letter-spacing: 0.04em;
+  color: var(--do-color-primary);
+  white-space: nowrap;
+}
+
+/* When collapsible, the whole header is the toggle button. */
+.headerToggle {
+  width: 100%;
+  border: none;
+  border-radius: var(--do-radius-md);
+  background: none;
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.headerToggle:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 4px;
+}
+
+/* Decorative chevron affordance (the header, not this box, is clickable). */
+.chevronBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-sm);
+  background-color: var(--do-color-surface);
+  color: var(--do-color-text-muted);
+  transition:
+    background-color var(--do-duration-fast) var(--do-ease-standard),
+    border-color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.headerToggle:hover .chevronBox {
+  border-color: var(--do-color-border-strong);
+  color: var(--do-color-text);
+}
+
+.chevron {
+  transition: transform var(--do-duration-normal) var(--do-ease-standard);
+}
+
+/* Collapsed (aria-expanded="false") points the chevron down. */
+.headerToggle[aria-expanded='false'] .chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Body ─────────────────────────────────────────────────────────────────────── */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-5);
+}
+
+.strokeCount {
+  align-self: flex-start;
+  padding: var(--do-space-1) var(--do-space-3);
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-surface);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text-muted);
+}
+
+/* ── On'yomi / kun'yomi rows ────────────────────────────────────────────────────── */
+.readingRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-2);
+}
+
+.readingRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--do-space-2);
+  margin: 0;
+  font-size: var(--do-font-size-md);
+  line-height: var(--do-line-height-normal);
+}
+
+.readingKind {
+  flex: none;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--do-radius-sm);
+  background-color: var(--do-color-primary-subtle);
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-sm);
+  color: var(--do-color-primary);
+}
+
+.readingLabel {
+  font-weight: var(--do-font-weight-semibold);
+  color: var(--do-color-text);
+}
+
+.readingValue {
+  font-family: var(--do-font-cjk);
+  color: var(--do-color-text-muted);
+}
+
+/* ── Sections: radical · parts · stroke order ───────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-2);
+}
+
+.sectionLabel {
+  margin: 0;
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--do-color-text-subtle);
+}
+
+/* Radical / part chip: glyph + reading/gloss text. */
+.component {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--do-space-2);
+}
+
+.componentChar {
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-xl);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text);
+}
+
+.componentText {
+  font-size: var(--do-font-size-sm);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text-muted);
+}
+
+.componentReading {
+  font-family: var(--do-font-cjk);
+  color: var(--do-color-text-subtle);
+}
+
+.componentReading::after {
+  content: ' – ';
+  white-space: pre;
+}
+
+.parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--do-space-4) var(--do-space-5);
+}
+
+/* ── Stroke-order box ───────────────────────────────────────────────────────────── */
+.strokeOrder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
+  padding: var(--do-space-4);
+  border: 1px dashed var(--do-color-border-strong);
+  border-radius: var(--do-radius-md);
+  background-color: var(--do-color-surface);
+  overflow: hidden;
+}
+
+.strokeWatermark {
+  font-family: var(--do-font-cjk);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--do-color-border-strong);
+}
+
+.strokeHint {
+  position: absolute;
+  right: var(--do-space-3);
+  bottom: var(--do-space-2);
+  font-size: var(--do-font-size-xs);
+  color: var(--do-color-text-subtle);
+}
+
+/* ── Footer action ──────────────────────────────────────────────────────────────── */
+.action {
+  display: flex;
+}

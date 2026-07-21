@@ -22,3 +22,9 @@ export type { SectionHeadingProps } from './SectionHeading';
 
 export { SentenceView } from './SentenceView';
 export type { SentenceViewProps, SentenceToken } from './SentenceView';
+
+export { KanjiCard } from './KanjiCard';
+export type { KanjiCardProps, KanjiReading, KanjiComponent } from './KanjiCard';
+
+export { WordCard } from './WordCard';
+export type { WordCardProps, WordSection, KanjiInWord } from './WordCard';
