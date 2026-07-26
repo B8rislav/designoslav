@@ -91,6 +91,14 @@
   --do-color-pos-particle: var(--do-pos-particle);
   --do-color-pos-pronoun: var(--do-pos-pronoun);
 
+  /* ── Semantic: search parse-unit accents (kanji / word / phrase) ─────────── */
+  --do-color-unit-kanji: var(--do-terracotta-500);
+  --do-color-unit-kanji-subtle: var(--do-terracotta-50);
+  --do-color-unit-word: var(--do-celadon-500);
+  --do-color-unit-word-subtle: var(--do-celadon-50);
+  --do-color-unit-phrase: var(--do-pos-noun);
+  --do-color-unit-phrase-subtle: var(--do-neutral-200);
+
   /* ── Semantic: focus ring ───────────────────────────────────────────────── */
   --do-color-focus-ring: var(--do-celadon-400);
 }

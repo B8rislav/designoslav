@@ -1,0 +1,128 @@
+.form {
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--do-space-2);
+  font-family: var(--do-font-sans);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── The bordered input box (icon + input + clear) ──────────────────────────── */
+.field {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--do-space-2);
+  min-width: 0;
+  background-color: var(--do-color-surface-raised);
+  border: 1px solid var(--do-color-border-strong);
+  border-radius: var(--do-radius-md);
+  transition:
+    border-color var(--do-duration-fast) var(--do-ease-standard),
+    box-shadow var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.field:hover {
+  border-color: var(--do-color-text-subtle);
+}
+
+.field:focus-within {
+  border-color: var(--do-color-primary);
+  box-shadow: 0 0 0 2px var(--do-color-primary-subtle);
+}
+
+/* ── Sizes ──────────────────────────────────────────────────────────────────── */
+.m .field {
+  height: 40px;
+  padding: 0 var(--do-space-3);
+  font-size: var(--do-font-size-sm);
+}
+.l .field {
+  height: 48px;
+  padding: 0 var(--do-space-4);
+  font-size: var(--do-font-size-md);
+}
+
+/* ── Leading icon ───────────────────────────────────────────────────────────── */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--do-color-primary);
+}
+
+.iconGlyph {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* ── Input ──────────────────────────────────────────────────────────────────── */
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--do-color-text);
+  font: inherit;
+  line-height: var(--do-line-height-normal);
+}
+
+.input::placeholder {
+  color: var(--do-color-text-subtle);
+}
+
+/* Hide the native clear/decoration UA controls — we render our own. */
+.input::-webkit-search-decoration,
+.input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ── Clear button ───────────────────────────────────────────────────────────── */
+.clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+  border: none;
+  border-radius: var(--do-radius-pill);
+  background: transparent;
+  color: var(--do-color-text-subtle);
+  cursor: pointer;
+  transition:
+    background-color var(--do-duration-fast) var(--do-ease-standard),
+    color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.clear svg {
+  width: 0.875em;
+  height: 0.875em;
+}
+
+.clear:hover {
+  background-color: var(--do-color-bg);
+  color: var(--do-color-text-muted);
+}
+
+.clear:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 1px;
+}
+
+/* ── Disabled ───────────────────────────────────────────────────────────────── */
+.disabled .field {
+  background-color: var(--do-color-bg);
+  border-color: var(--do-color-border);
+}
+
+.disabled .input {
+  color: var(--do-color-text-subtle);
+  cursor: not-allowed;
+}

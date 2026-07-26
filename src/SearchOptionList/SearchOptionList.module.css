@@ -1,0 +1,38 @@
+.popover {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-2);
+  padding: var(--do-space-3);
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-md);
+  font-family: var(--do-font-sans);
+}
+
+.heading {
+  margin: 0;
+  padding: 0 var(--do-space-2);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--do-color-text-subtle);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+}
+
+.item > * {
+  flex: 1;
+}

@@ -1,6 +1,15 @@
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
 
+export { SearchField } from './SearchField';
+export type { SearchFieldProps, SearchFieldSize } from './SearchField';
+
+export { SearchOption } from './SearchOption';
+export type { SearchOptionProps, SearchUnitType } from './SearchOption';
+
+export { SearchOptionList } from './SearchOptionList';
+export type { SearchOptionListProps, SearchOptionItem } from './SearchOptionList';
+
 export { SegmentedControl } from './SegmentedControl';
 export type {
   SegmentedControlProps,
