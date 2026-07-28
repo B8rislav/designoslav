@@ -1,0 +1,24 @@
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--do-space-1);
+  text-align: center;
+}
+
+.value {
+  font-size: 1.75rem;
+  font-weight: var(--do-font-weight-semibold);
+  line-height: 1;
+  color: var(--do-color-text);
+}
+
+.label {
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--do-color-text-subtle);
+}

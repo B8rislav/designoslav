@@ -1,6 +1,18 @@
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
 
+export { DashboardCard } from './DashboardCard';
+export type { DashboardCardProps, DashboardCardVariant } from './DashboardCard';
+
+export { DailyGoal } from './DailyGoal';
+export type { DailyGoalProps } from './DailyGoal';
+
+export { StreakBadge } from './StreakBadge';
+export type { StreakBadgeProps, StreakDay, StreakDayState } from './StreakBadge';
+
+export { StatTile } from './StatTile';
+export type { StatTileProps } from './StatTile';
+
 export { SearchField } from './SearchField';
 export type { SearchFieldProps, SearchFieldSize } from './SearchField';
 
