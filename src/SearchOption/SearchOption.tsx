@@ -1,4 +1,4 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { forwardRef, type LiHTMLAttributes, type ReactNode } from 'react';
 
 import styles from './SearchOption.module.css';
 
@@ -12,43 +12,44 @@ const UNIT_GLYPH: Record<SearchUnitType, string> = {
   phrase: '文',
 };
 
-export interface SearchOptionProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+export interface SearchOptionProps extends Omit<LiHTMLAttributes<HTMLLIElement>, 'onSelect'> {
   /** Parse unit this option represents. Sets the default glyph, accent color, and tile tint. */
   unit: SearchUnitType;
   /** The Japanese text on offer, e.g. 勉強 or 私は毎日日本語を勉強します. Rendered in the CJK face. */
   text: ReactNode;
-  /** Secondary line under the text, e.g. "разобрать как слово". */
+  /** Secondary line under the text, e.g. "разобрать как слово". Clamped to one line. */
   hint?: ReactNode;
   /** Caps label on the trailing edge, e.g. Слово / Кандзи / Фраза. Localized — pass it in. */
   unitLabel?: ReactNode;
   /** Override the badge glyph. Defaults to 漢 / 語 / 文 based on `unit`. */
   badge?: ReactNode;
-  /** Mark this row as the active / highlighted option. */
-  selected?: boolean;
+  /**
+   * Mark this row as the keyboard-active option — the one `aria-activedescendant` points
+   * at. Being active is *not* a commitment: the user is browsing, and only Enter or a
+   * click commits.
+   */
+  active?: boolean;
 }
 
 /**
  * A single parse option in the search "варианты разбора" popover: a unit badge (漢 / 語 / 文),
  * the Japanese text with a hint line beneath it, and a caps unit label on the trailing edge.
- * Renders as a `<button>` — wire selection through `onClick`. Presentational and stateless; it
- * does not know what choosing it does. Usually composed by {@link SearchOptionList}.
+ *
+ * Renders as `<li role="option">` and is **not** focusable — it belongs inside a
+ * `role="listbox"` whose combobox owns focus and drives the highlight through
+ * `aria-activedescendant`. Wire selection through `onClick`. Usually composed by
+ * {@link SearchOptionList}; if you render one standalone, put it inside a listbox.
  */
-export const SearchOption = forwardRef<HTMLButtonElement, SearchOptionProps>(function SearchOption(
-  { unit, text, hint, unitLabel, badge, selected = false, className, ...rest },
+export const SearchOption = forwardRef<HTMLLIElement, SearchOptionProps>(function SearchOption(
+  { unit, text, hint, unitLabel, badge, active = false, className, ...rest },
   ref,
 ) {
-  const classes = [styles.option, styles[unit], selected ? styles.selected : '', className ?? '']
+  const classes = [styles.option, styles[unit], active ? styles.active : '', className ?? '']
     .filter(Boolean)
     .join(' ');
 
   return (
-    <button
-      ref={ref}
-      type="button"
-      className={classes}
-      aria-current={selected || undefined}
-      {...rest}
-    >
+    <li ref={ref} role="option" aria-selected={active} className={classes} {...rest}>
       <span className={styles.badge} aria-hidden="true">
         {badge ?? UNIT_GLYPH[unit]}
       </span>
@@ -57,6 +58,6 @@ export const SearchOption = forwardRef<HTMLButtonElement, SearchOptionProps>(fun
         {hint != null && <span className={styles.hint}>{hint}</span>}
       </span>
       {unitLabel != null && <span className={styles.unitLabel}>{unitLabel}</span>}
-    </button>
+    </li>
   );
 });

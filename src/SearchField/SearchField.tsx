@@ -1,6 +1,13 @@
-import { forwardRef, type FormEvent, type InputHTMLAttributes, type ReactNode } from 'react';
+import {
+  forwardRef,
+  type InputHTMLAttributes,
+  type KeyboardEvent,
+  type ReactNode,
+  type SyntheticEvent,
+} from 'react';
 
 import { Button } from '../Button';
+import { optionDomId } from '../shared/listbox';
 
 import styles from './SearchField.module.css';
 
@@ -14,7 +21,11 @@ export interface SearchFieldProps extends Omit<
   value: string;
   /** Called with the new text on every keystroke. */
   onValueChange: (value: string) => void;
-  /** Called with the current text when the user submits (Enter or the action button). */
+  /**
+   * Called with the current text when the user submits (Enter or the action button).
+   * Enter does *not* submit while an option is highlighted — it commits that option
+   * instead, through `onOptionCommit`.
+   */
   onSubmit?: (value: string) => void;
   /** `m` (40px) · `l` (48px). Matches the equivalent Button sizes. */
   size?: SearchFieldSize;
@@ -31,6 +42,29 @@ export interface SearchFieldProps extends Omit<
   /** Required — the field has no visible label of its own (e.g. "Search the dictionary"). */
   'aria-label': string;
   className?: string;
+
+  /* ── Combobox ──────────────────────────────────────────────────────────────
+   * Pass these to pair the field with a {@link SearchOptionList} popover. The field
+   * becomes a `role="combobox"` and takes over ↑↓ / Home / End / Enter / Escape while the
+   * popover is open. Focus never leaves the input, so the user can keep refining the query
+   * while browsing options — the highlight is conveyed by `aria-activedescendant`, not by
+   * moving focus. Omit them and the field stays a plain search box.
+   */
+
+  /** `id` of the paired list's listbox element — the same value you give it as `id`. */
+  listboxId?: string;
+  /** Whether the popover is open (controlled). Drives `aria-expanded`. */
+  expanded?: boolean;
+  /** The option ids currently in the popover, in render order. Arrow keys walk this. */
+  optionIds?: readonly string[];
+  /** `id` of the highlighted option (controlled). Browsing only — it commits nothing. */
+  activeOptionId?: string;
+  /** Called as ↑↓ / Home / End move the highlight. */
+  onActiveOptionChange?: (id: string) => void;
+  /** Called with the highlighted option's `id` when Enter commits it. */
+  onOptionCommit?: (id: string) => void;
+  /** Called on Escape. Dismissing the popover is the caller's to do. */
+  onDismiss?: () => void;
 }
 
 const SearchIcon = () => (
@@ -69,6 +103,12 @@ const ClearIcon = () => (
  * and an optional trailing submit Button (the "Найти" CTA). Pressing Enter or clicking the
  * action button both fire `onSubmit`. Forwards its ref to the underlying input so callers
  * can focus it (e.g. a `/` keyboard shortcut).
+ *
+ * Pass `listboxId` and the combobox props to pair it with a {@link SearchOptionList}: the
+ * input becomes a `role="combobox"` that owns ↑↓ / Home / End / Enter / Escape for the
+ * popover. Focus stays in the input the whole time — the highlight travels through
+ * `aria-activedescendant` — so browsing the parse options never interrupts typing, and
+ * moving the highlight commits nothing until Enter.
  */
 export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(function SearchField(
   {
@@ -84,11 +124,23 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(functi
     disabled = false,
     placeholder,
     className,
+    listboxId,
+    expanded = false,
+    optionIds,
+    activeOptionId,
+    onActiveOptionChange,
+    onOptionCommit,
+    onDismiss,
+    onKeyDown,
     ...rest
   },
   ref,
 ) {
   const showClear = clearable && value.length > 0 && !disabled;
+
+  const isCombobox = listboxId != null;
+  const ids = optionIds ?? [];
+  const isBrowsable = isCombobox && expanded && ids.length > 0;
 
   const classes = [
     styles.form,
@@ -100,9 +152,63 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(functi
     .filter(Boolean)
     .join(' ');
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault();
     onSubmit?.(value);
+  };
+
+  /** Move the highlight by `delta`, wrapping. With nothing highlighted, ↓ takes the first
+   *  option and ↑ the last — so a single keypress always lands somewhere. */
+  const step = (delta: number) => {
+    const current = activeOptionId == null ? -1 : ids.indexOf(activeOptionId);
+    const next =
+      current === -1
+        ? delta > 0
+          ? 0
+          : ids.length - 1
+        : (current + delta + ids.length) % ids.length;
+    onActiveOptionChange?.(ids[next]);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+    if (event.defaultPrevented || !isBrowsable) return;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        // preventDefault throughout: otherwise the caret jumps to either end of the query
+        // while the user is only trying to browse the list.
+        event.preventDefault();
+        step(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        step(-1);
+        break;
+      case 'Home':
+        event.preventDefault();
+        onActiveOptionChange?.(ids[0]);
+        break;
+      case 'End':
+        event.preventDefault();
+        onActiveOptionChange?.(ids[ids.length - 1]);
+        break;
+      case 'Enter':
+        // Only swallow the submit when there is something to commit; with no highlight,
+        // Enter still means "search for what I typed".
+        if (activeOptionId == null) break;
+        event.preventDefault();
+        onOptionCommit?.(activeOptionId);
+        break;
+      case 'Escape':
+        // type="search" clears itself on Escape in some browsers — not what dismissing a
+        // popover should do to the query.
+        event.preventDefault();
+        onDismiss?.();
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -117,7 +223,19 @@ export const SearchField = forwardRef<HTMLInputElement, SearchFieldProps>(functi
           disabled={disabled}
           placeholder={placeholder}
           onChange={(event) => onValueChange(event.target.value)}
+          onKeyDown={handleKeyDown}
           {...rest}
+          // After `rest` on purpose — the combobox relationship is computed from props we
+          // own, and a stray caller-supplied aria-expanded would silently desync it.
+          role={isCombobox ? 'combobox' : undefined}
+          aria-expanded={isCombobox ? expanded : undefined}
+          aria-controls={isCombobox && expanded ? listboxId : undefined}
+          aria-autocomplete={isCombobox ? 'list' : undefined}
+          aria-activedescendant={
+            isCombobox && expanded && activeOptionId != null
+              ? optionDomId(listboxId, activeOptionId)
+              : undefined
+          }
         />
         {showClear && (
           <button

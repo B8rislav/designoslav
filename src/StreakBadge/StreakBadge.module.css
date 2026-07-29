@@ -1,0 +1,59 @@
+.headline {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--do-space-2);
+  margin: 0;
+}
+
+.count {
+  font-size: 1.75rem;
+  font-weight: var(--do-font-weight-semibold);
+  line-height: 1;
+  color: var(--do-color-accent);
+}
+
+.label {
+  font-size: var(--do-font-size-sm);
+  color: var(--do-color-text-muted);
+}
+
+/* ── Weekday calendar ───────────────────────────────────────────────────────── */
+.week {
+  display: flex;
+  justify-content: center;
+  gap: var(--do-space-2);
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--do-space-2);
+}
+
+.dayLabel {
+  font-size: var(--do-font-size-xs);
+  line-height: 1;
+  color: var(--do-color-text-subtle);
+}
+
+.dot {
+  box-sizing: border-box;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid transparent;
+  border-radius: var(--do-radius-pill);
+}
+
+.done {
+  background-color: var(--do-color-primary);
+}
+
+.today {
+  border-color: var(--do-color-accent);
+}
+
+.upcoming {
+  border-color: var(--do-color-border-strong);
+}

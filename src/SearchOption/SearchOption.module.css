@@ -6,7 +6,11 @@
   display: flex;
   align-items: center;
   gap: var(--do-space-3);
-  width: 100%;
+  /* The listbox is a column flex container, so the row already stretches to full width —
+     an explicit `width: 100%` would add padding and border *on top* of that and push a
+     horizontal scrollbar under the popover. border-box keeps it safe if a consumer does
+     set a width through `className`. */
+  box-sizing: border-box;
   padding: var(--do-space-2) var(--do-space-3);
   border: 1px solid transparent;
   border-radius: var(--do-radius-md);
@@ -19,23 +23,18 @@
     border-color var(--do-duration-fast) var(--do-ease-standard);
 }
 
-.option:hover:not(:disabled) {
+.option:hover {
   background-color: var(--do-color-bg);
 }
 
-.option.selected {
+/**
+ * The keyboard-active row. Options are never focused — the combobox input keeps focus and
+ * points here with aria-activedescendant — so this is the only highlight there is, and it
+ * has to read as strongly as a focus ring would.
+ */
+.option.active {
   border-color: var(--do-color-primary);
   background-color: var(--do-color-primary-subtle);
-}
-
-.option:focus-visible {
-  outline: 2px solid var(--do-color-focus-ring);
-  outline-offset: 2px;
-}
-
-.option:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 /* ── Unit accents ───────────────────────────────────────────────────────────── */
@@ -76,17 +75,24 @@
   min-width: 0;
 }
 
+/* Primary content — wraps freely and never truncates. The user is choosing which parse to
+   run, so the full candidate has to be readable even when it is a whole sentence. */
 .text {
   font-family: var(--do-font-cjk);
   font-size: var(--do-font-size-md);
   line-height: var(--do-line-height-tight);
   color: var(--do-color-text);
+  overflow-wrap: anywhere;
 }
 
+/* Secondary content — clamped to one line so rows stay predictable in the scrollport. */
 .hint {
   font-size: var(--do-font-size-xs);
   line-height: var(--do-line-height-tight);
   color: var(--do-color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ── Trailing unit label ────────────────────────────────────────────────────── */
