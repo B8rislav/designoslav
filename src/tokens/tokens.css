@@ -45,6 +45,13 @@
   --do-shadow-sm: 0 1px 2px rgba(35, 40, 42, 0.06);
   --do-shadow-md: 0 4px 16px rgba(35, 40, 42, 0.08);
 
+  /* ── Sizing ─────────────────────────────────────────────────────────────── */
+  /**
+   * Vertical bound for overlay lists (listbox popovers). In-flow lists are left
+   * unbounded — see the scroll policy in CLAUDE.md. Roughly five option rows.
+   */
+  --do-size-overlay-list-max-height: 18rem;
+
   /* ── Motion ─────────────────────────────────────────────────────────────── */
   --do-duration-fast: 120ms;
   --do-duration-normal: 200ms;

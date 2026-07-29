@@ -10,7 +10,7 @@ const meta: Meta<typeof SearchOption> = {
     text: '勉強',
     hint: 'разобрать как слово',
     unitLabel: 'Слово',
-    selected: false,
+    active: false,
   },
   argTypes: {
     unit: { control: 'inline-radio', options: ['kanji', 'word', 'phrase'] },
@@ -19,6 +19,19 @@ const meta: Meta<typeof SearchOption> = {
   parameters: {
     layout: 'padded',
   },
+  // An option is only valid inside a listbox — rendering one bare would be invalid HTML
+  // and would strip its role from the accessibility tree.
+  decorators: [
+    (Story) => (
+      <ul
+        role="listbox"
+        aria-label="Варианты разбора"
+        style={{ margin: 0, padding: 0, listStyle: 'none', maxWidth: 460 }}
+      >
+        <Story />
+      </ul>
+    ),
+  ],
 };
 
 export default meta;
@@ -42,15 +55,32 @@ export const Phrase: Story = {
   },
 };
 
-/** The active / highlighted row, as picked out by the arrow keys. */
-export const Selected: Story = {
-  args: { selected: true },
+/**
+ * The keyboard-active row. Options are never focused, so this highlight is the only signal
+ * the user has about where the arrow keys have landed.
+ */
+export const Active: Story = {
+  args: { active: true },
+};
+
+/**
+ * Long content. The Japanese text wraps rather than truncating — the user has to be able to
+ * read the whole candidate before committing to parse it — while the hint clamps to one
+ * line so rows stay predictable in the scrollport.
+ */
+export const LongContent: Story = {
+  args: {
+    unit: 'phrase',
+    text: '私は毎日日本語を勉強していますが、漢字を覚えるのはとても難しいと思います',
+    hint: 'полный разбор предложения со всеми частицами и вспомогательными глаголами',
+    unitLabel: 'Фраза',
+  },
 };
 
 /** All three units, stacked as they appear in the popover. */
 export const Units: Story = {
   render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, maxWidth: 460 }}>
+    <>
       <SearchOption
         {...args}
         unit="word"
@@ -73,6 +103,6 @@ export const Units: Story = {
         hint="полный разбор предложения"
         unitLabel="Фраза"
       />
-    </div>
+    </>
   ),
 };

@@ -44,15 +44,22 @@ Node is pinned in [.nvmrc](.nvmrc) (v25.8.1) — assume `nvm use` then `npm inst
 |---------|--------------|
 | `npm run storybook` | Storybook dev server — http://localhost:6006 |
 | `npm run build:storybook` | Static build to `storybook-static/` |
+| `npm run test` | Runs every story in headless Chromium; `play` functions are the assertions |
+| `npm run test:watch` | Same, in watch mode |
 | `npm run typecheck` | `tsc --noEmit` — **run after any `.ts`/`.tsx` change** |
 | `npm run lint` | ESLint over the repo |
 | `npm run lint:fix` | ESLint with `--fix` |
 | `npm run format` | Prettier write over `src/**` |
 | `npm run format:check` | Prettier check (CI-style) |
 
-There is **no test runner** and **no unit tests** — Storybook stories are the
-verification surface. Before finishing a change, run `npm run typecheck` and
-`npm run lint`, and confirm the affected story still renders (`npm run storybook`).
+There are **no separate unit tests** — Storybook stories are the verification surface, and
+`npm run test` runs them for real via [vitest.config.ts](vitest.config.ts)
+(`@storybook/addon-vitest` + Playwright). A story with a `play` function is a test; one
+without still asserts that the component renders without throwing. Requires a Chromium
+download once (`npx playwright install chromium`).
+
+Before finishing a change, run `npm run typecheck`, `npm run lint`, and `npm run test`, and
+confirm the affected story still renders (`npm run storybook`).
 
 ## Layout
 
@@ -68,10 +75,17 @@ src/
     Button.module.css   styles (CSS Module)
     Button.stories.tsx  stories
     index.ts            barrel: re-exports component + its types
-  SegmentedControl/     same four-file shape
+  DailyGoal/ DashboardCard/ EntryCard/ EntryList/ KanjiCard/ SearchField/
+  SearchOption/ SearchOptionList/ SectionHeading/ SegmentedControl/
+  SentenceView/ StatTile/ StreakBadge/ ToggleGroup/ WordCard/
+                        same four-file shape
+  shared/
+    useRadioGroupKeys.ts  radiogroup arrow/Home/End behavior (selection follows focus)
+    listbox.ts            option DOM ids shared by a combobox and its listbox
   css-modules.d.ts      `*.module.css` typing shim
   index.ts              public entry — re-exports every component barrel
 .storybook/             Storybook config; preview.tsx loads tokens.css globally
+vitest.config.ts        runs every story in a real browser; play functions are the tests
 .github/workflows/      deploy-storybook.yml → GitHub Pages on push to main
 ```
 
@@ -85,7 +99,10 @@ re-exports the component *and* its public types; then add that barrel to
 **Presentational only.** Components are thin wrappers over native elements styled from
 tokens — no data fetching, no global state, no side effects. Stateful controls are
 **controlled** (`value` + `onChange`), never internally stateful. See
-[SegmentedControl.tsx](src/SegmentedControl/SegmentedControl.tsx).
+[SegmentedControl.tsx](src/SegmentedControl/SegmentedControl.tsx). The one sanctioned
+side effect is keeping the element the user is on visible — see
+[KanjiCard.tsx](src/KanjiCard/KanjiCard.tsx) and
+[SearchOptionList.tsx](src/SearchOptionList/SearchOptionList.tsx).
 
 **Styling = CSS Modules + tokens.** Never hardcode a color, radius, spacing, shadow, or
 duration. Reference `var(--do-*)` semantic tokens only (`--do-color-primary`,
@@ -105,7 +122,54 @@ attributes pass through. Default props inline in the signature.
 **Accessibility is not optional.** Implement the correct WAI-ARIA pattern and keyboard
 behavior (SegmentedControl implements `radiogroup` with arrow/Home/End keys). Require an
 `aria-label` via the prop type when a control has no visible label. The a11y addon is
-enabled in Storybook — check the Accessibility panel.
+enabled in Storybook — check the Accessibility panel. See **Interaction contracts** below
+for the rules that panel cannot check for you.
+
+**Formatting.** Prettier: single quotes, semicolons, trailing commas, 100-col width,
+2-space indent (see [.prettierrc.json](.prettierrc.json) / [.editorconfig](.editorconfig)).
+Run `npm run format` before finishing.
+
+## Interaction contracts (non-negotiable)
+
+These four rules exist because each was violated by a component that *looked* finished.
+A component that advertises a behavior — in its docs, its props, or its UI — and does not
+implement it is a bug, not an omission.
+
+**1. Selection follows focus only when committing is free.** A `radiogroup` (a cheap
+filter like SegmentedControl or ToggleGroup) may fuse them: arrow keys move focus *and*
+change the value, via [useRadioGroupKeys.ts](src/shared/useRadioGroupKeys.ts). Anything
+where committing does real work — a fetch, a parse, a navigation — must be
+**browse-then-commit**: arrows move a highlight only, Enter commits, and the highlight is
+a separate prop from the committed value. Never wire arrow keys straight into an
+`onSelect` that triggers work.
+
+**2. When focus must stay put, use `aria-activedescendant`, not roving focus.** A popover
+list hanging off a text input cannot take focus, or the user stops being able to type.
+The input keeps focus and owns the keys; the list is presentation. See
+[SearchField.tsx](src/SearchField/SearchField.tsx) driving
+[SearchOptionList.tsx](src/SearchOptionList/SearchOptionList.tsx). When focus *can* move
+into the widget, prefer roving `tabIndex`.
+
+**3. Overlays are bounded; in-flow lists are free.** Any list rendered as an overlay gets
+`max-height: var(--do-size-overlay-list-max-height)` + `overflow-y: auto`, and must scroll
+its active item into view (`scrollIntoView({ block: 'nearest' })`) or the highlight can
+vanish off-screen. Lists that flow in the page (EntryList) stay unbounded — a nested
+scrollport is worse than letting the page scroll. Both stay overridable via `className`.
+
+**4. Wrap primary content, clamp secondary.** Primary content — the headword, the Japanese
+text, anything the user is deciding *about* — wraps and never truncates. Secondary lines
+(hints, glosses) clamp to one line with ellipsis so rows stay predictable. Every flex or
+grid child holding caller-supplied text needs `min-width: 0`, and such text needs
+`overflow-wrap: anywhere` so one unbroken token cannot blow out the layout.
+
+**Verification.** Every interactive component ships a `play` function asserting its
+keyboard contract — see the `KeyboardContract`, `EscapeDismisses`, and `EnterCommits`
+stories in
+[SearchOptionList.stories.tsx](src/SearchOptionList/SearchOptionList.stories.tsx).
+`npm run test` runs every story in headless Chromium; the a11y addon cannot catch a
+listbox whose arrow keys do nothing, so prose and axe are not enough.
+
+## Conventions, continued
 
 **TypeScript.** Strict mode, `noUnusedLocals`/`noUnusedParameters` on. Use **inline
 type imports** (`import { forwardRef, type ButtonHTMLAttributes } from 'react'`) — ESLint
@@ -115,11 +179,8 @@ types (`ButtonVariant`, `SegmentedControlSize`). Prefix intentionally-unused var
 
 **Stories.** `title: 'Components/<Name>'`, a `meta` with `args`/`argTypes`, one story
 per variant, plus composite `Variants`/`Sizes` render stories. Use jpdict-flavored copy.
-Doc comments on stories become Storybook descriptions.
-
-**Formatting.** Prettier: single quotes, semicolons, trailing commas, 100-col width,
-2-space indent (see [.prettierrc.json](.prettierrc.json) / [.editorconfig](.editorconfig)).
-Run `npm run format` before finishing.
+Doc comments on stories become Storybook descriptions. Interactive components additionally
+get a `play` function per rule 4 above.
 
 ## Adding a component (checklist)
 
@@ -128,8 +189,13 @@ Run `npm run format` before finishing.
 3. `src/<Name>/<Name>.stories.tsx` — `Components/<Name>`, jpdict copy.
 4. `src/<Name>/index.ts` — barrel (component + types).
 5. Add the barrel export to `src/index.ts`.
-6. `npm run typecheck && npm run lint && npm run format`.
-7. Verify the story renders in Storybook.
+6. **Interaction contracts** — pick the keyboard model (contract 1) and the focus model
+   (contract 2), bound it if it's an overlay (contract 3), decide what long text does
+   (contract 4). If the component claims a WAI-ARIA pattern, implement all of it.
+7. **A `play` function** asserting that keyboard contract, plus a story showing the
+   component under content it cannot fit.
+8. `npm run typecheck && npm run lint && npm run test && npm run format`.
+9. Verify the story renders in Storybook.
 
 ## Git / PRs
 
