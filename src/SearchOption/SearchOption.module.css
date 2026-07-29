@@ -6,7 +6,11 @@
   display: flex;
   align-items: center;
   gap: var(--do-space-3);
-  width: 100%;
+  /* The listbox is a column flex container, so the row already stretches to full width —
+     an explicit `width: 100%` would add padding and border *on top* of that and push a
+     horizontal scrollbar under the popover. border-box keeps it safe if a consumer does
+     set a width through `className`. */
+  box-sizing: border-box;
   padding: var(--do-space-2) var(--do-space-3);
   border: 1px solid transparent;
   border-radius: var(--do-radius-md);
