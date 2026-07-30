@@ -1,0 +1,95 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--do-space-2);
+  padding: 0;
+  border: none;
+  border-radius: var(--do-radius-sm);
+  background: none;
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-sm);
+  font-weight: var(--do-font-weight-medium);
+  color: var(--do-color-text);
+  cursor: pointer;
+}
+
+/* Label reads before the track. `row-reverse` rather than reordering the DOM, so
+   the accessible name still comes from the label element. */
+.labelStart {
+  flex-direction: row-reverse;
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.track {
+  position: relative;
+  flex: none;
+  display: inline-block;
+  background-color: var(--do-color-border-strong);
+  border-radius: var(--do-radius-pill);
+  transition: background-color var(--do-duration-normal) var(--do-ease-standard);
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  translate: 0 -50%;
+  background-color: var(--do-color-surface-raised);
+  border-radius: var(--do-radius-pill);
+  box-shadow: var(--do-shadow-sm);
+  transition: translate var(--do-duration-normal) var(--do-ease-standard);
+}
+
+.checked .track {
+  background-color: var(--do-color-primary);
+}
+
+.root:hover:not(.disabled) .track {
+  background-color: var(--do-color-text-subtle);
+}
+
+.checked:hover:not(.disabled) .track {
+  background-color: var(--do-color-primary-hover);
+}
+
+.disabled {
+  cursor: not-allowed;
+  color: var(--do-color-text-subtle);
+  opacity: 0.6;
+}
+
+/* ── Sizes ──────────────────────────────────────────────────────────────────── */
+.m .track {
+  width: 36px;
+  height: 20px;
+}
+.m .thumb {
+  width: 16px;
+  height: 16px;
+}
+.m.checked .thumb {
+  translate: 16px -50%;
+}
+
+.l .track {
+  width: 44px;
+  height: 24px;
+}
+.l .thumb {
+  width: 20px;
+  height: 20px;
+}
+.l.checked .thumb {
+  translate: 20px -50%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .thumb {
+    transition: none;
+  }
+}

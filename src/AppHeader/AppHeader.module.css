@@ -1,0 +1,54 @@
+.header {
+  width: 100%;
+  background-color: var(--do-color-surface);
+  border-bottom: 1px solid var(--do-color-border);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  /* Above in-flow content, below the search popover (z-index 30 in jpdict). */
+  z-index: 20;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-5);
+  min-height: 64px;
+  padding: var(--do-space-3) var(--do-space-8);
+}
+
+.brand,
+.center,
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-3);
+  flex: none;
+}
+
+/* Pushes nav + actions to the trailing edge without either slot needing to know
+   the other exists. */
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-6);
+  flex: none;
+}
+
+@media (max-width: 720px) {
+  .inner {
+    flex-wrap: wrap;
+    gap: var(--do-space-3);
+    padding: var(--do-space-3) var(--do-space-4);
+  }
+
+  .spacer {
+    flex-basis: 100%;
+  }
+}

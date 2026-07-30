@@ -1,0 +1,80 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--do-space-3);
+  color: var(--do-color-text);
+  text-decoration: none;
+}
+
+.tile {
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-family: var(--do-font-serif);
+  line-height: 1;
+  color: var(--do-color-on-primary);
+  background-color: var(--do-color-primary);
+  border-radius: var(--do-radius-md);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  /* The wordmark and subtitle are set tight against each other so the pair reads as
+     one object rather than two stacked lines. */
+  gap: 1px;
+  min-width: 0;
+}
+
+.wordmark {
+  font-family: var(--do-font-serif);
+  font-weight: var(--do-font-weight-semibold);
+  line-height: var(--do-line-height-tight);
+  color: var(--do-color-text);
+}
+
+.subtitle {
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-medium);
+  letter-spacing: 0.14em;
+  line-height: var(--do-line-height-tight);
+  text-transform: uppercase;
+  color: var(--do-color-text-subtle);
+}
+
+/* Only when rendered as a link — a plain `span` lockup shouldn't react to hover. */
+a.brand:hover .wordmark {
+  color: var(--do-color-primary);
+}
+
+a.brand:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--do-radius-sm);
+}
+
+/* ── Sizes ──────────────────────────────────────────────────────────────────── */
+.m .tile {
+  width: 32px;
+  height: 32px;
+  font-size: var(--do-font-size-lg);
+}
+.m .wordmark {
+  font-size: var(--do-font-size-md);
+}
+.m .subtitle {
+  font-size: 0.625rem;
+}
+
+.l .tile {
+  width: 40px;
+  height: 40px;
+  font-size: var(--do-font-size-xl);
+}
+.l .wordmark {
+  font-size: var(--do-font-size-lg);
+}
+.l .subtitle {
+  font-size: var(--do-font-size-xs);
+}

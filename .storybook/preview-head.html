@@ -1,0 +1,16 @@
+<!--
+  Storybook-only font loading. The published package ships tokens that *name* these
+  faces but deliberately doesn't fetch them — loading is the consuming app's job
+  (jpdict does it with next/font). Without this file the review surface would render
+  every story in a fallback, which is exactly where type problems hide.
+
+  Golos Text     — sans, the UI voice (Latin + Cyrillic)
+  Noto Serif JP  — display serif; its Cyrillic subset covers Russian headings
+  Noto Sans JP/SC — CJK body text, JP and SC glyph forms
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+  rel="stylesheet"
+/>

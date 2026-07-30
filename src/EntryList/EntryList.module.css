@@ -9,8 +9,61 @@
 
 .item {
   display: flex;
+  /* `both` so the item is already at the `from` state before its delay elapses —
+     otherwise every row flashes at full opacity on the first frame. */
+  animation: entryEnter var(--do-duration-normal) var(--do-ease-standard) both;
 }
 
 .item > * {
   flex: 1;
+}
+
+/**
+ * The cascade. CSS rather than a JS animation library because this component owns its
+ * own `<li>`s — a consumer can't wrap them — and the design system takes no runtime
+ * dependencies.
+ *
+ * Capped at the 8th row: past roughly half a second the stagger stops reading as
+ * choreography and starts reading as lag, so everything below lands together.
+ */
+.item:nth-child(1) {
+  animation-delay: 0ms;
+}
+.item:nth-child(2) {
+  animation-delay: 40ms;
+}
+.item:nth-child(3) {
+  animation-delay: 80ms;
+}
+.item:nth-child(4) {
+  animation-delay: 120ms;
+}
+.item:nth-child(5) {
+  animation-delay: 160ms;
+}
+.item:nth-child(6) {
+  animation-delay: 200ms;
+}
+.item:nth-child(7) {
+  animation-delay: 240ms;
+}
+.item:nth-child(n + 8) {
+  animation-delay: 280ms;
+}
+
+@keyframes entryEnter {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    animation: none;
+  }
 }

@@ -18,9 +18,10 @@
   padding: var(--do-space-5);
 }
 
+/* Display serif — the headword is the card's title, not its body text. */
 .word {
   flex: none;
-  font-family: var(--do-font-cjk);
+  font-family: var(--do-font-serif);
   font-size: 2.5rem;
   line-height: 1;
   color: var(--do-color-text);

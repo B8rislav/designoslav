@@ -1,0 +1,56 @@
+.skeleton {
+  /* Two layers: a flat base tint plus a moving highlight. Animating
+     `background-position` on a gradient keeps this off the layout path. */
+  background-color: var(--do-color-border);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--do-color-surface-raised) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.4s var(--do-ease-standard) infinite;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-2);
+}
+
+.text {
+  width: 100%;
+  height: 1em;
+  border-radius: var(--do-radius-sm);
+}
+
+.block {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--do-radius-lg);
+}
+
+.circle {
+  aspect-ratio: 1;
+  height: 2.5rem;
+  border-radius: var(--do-radius-pill);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* A pulsing placeholder is exactly the kind of repetitive motion the setting is
+   meant to stop — fall back to a flat block. */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    background-image: none;
+    animation: none;
+  }
+}

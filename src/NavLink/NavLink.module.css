@@ -1,0 +1,60 @@
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--do-space-1) 0;
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-sm);
+  font-weight: var(--do-font-weight-medium);
+  line-height: var(--do-line-height-normal);
+  color: var(--do-color-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--do-duration-fast) var(--do-ease-standard);
+}
+
+/* Always rendered, scaled to nothing — so hover grows the rule from the center
+   rather than adding a box and nudging the row. */
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-primary);
+  scale: 0 1;
+  transition: scale var(--do-duration-normal) var(--do-ease-standard);
+}
+
+.link:hover {
+  color: var(--do-color-text);
+}
+
+.link:hover::after {
+  scale: 0.6 1;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--do-radius-sm);
+}
+
+.active {
+  color: var(--do-color-text);
+  font-weight: var(--do-font-weight-semibold);
+}
+
+.active::after,
+.active:hover::after {
+  scale: 1 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .link::after {
+    transition: none;
+  }
+}

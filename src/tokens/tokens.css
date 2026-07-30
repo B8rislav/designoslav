@@ -10,7 +10,22 @@
 
 :root {
   /* ── Typography ─────────────────────────────────────────────────────────── */
-  --do-font-sans: 'Inter', 'Noto Sans JP', 'Zen Kaku Gothic', system-ui, sans-serif;
+  /**
+   * Three faces, three jobs. `sans` is the UI voice (Latin + Cyrillic), `cjk` is
+   * the reading face for Japanese/Chinese body text, and `serif` is display only
+   * — section headings, headwords, the brand lockup. Nothing else should reach
+   * for `serif`: mincho at body sizes is harder to read than gothic.
+   *
+   * The consumer is responsible for actually *loading* these (jpdict does it with
+   * next/font and maps the results onto these tokens). The stack degrades to
+   * system faces when it doesn't.
+   *
+   * `serif` leads with Noto Serif JP, whose glyphs are Japanese shapes. A CN-mode
+   * consumer should override this token with the SC cut — jpdict does it under
+   * its own `[data-lang='cn']` selector.
+   */
+  --do-font-sans: 'Golos Text', system-ui, sans-serif;
+  --do-font-serif: 'Noto Serif JP', 'Noto Serif SC', Georgia, serif;
   --do-font-cjk: 'Noto Sans JP', 'Noto Sans SC', sans-serif;
 
   --do-font-size-xs: 0.75rem;

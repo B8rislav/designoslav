@@ -1,0 +1,74 @@
+.band {
+  position: relative;
+  width: 100%;
+  padding: var(--do-space-8) var(--do-space-8) var(--do-space-6);
+  background-color: var(--do-color-bg);
+  border-bottom: 1px solid var(--do-color-border);
+  overflow: hidden;
+}
+
+/* Diagonal hatching, barely there — it gives the band a surface without competing
+   with the content. On its own layer so the tint above stays a flat token. */
+.band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--do-color-border) 55%, transparent) 0 1px,
+    transparent 1px 9px
+  );
+}
+
+.inner {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-3);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--do-color-primary);
+}
+
+/* Capped narrower than the footer: past ~800px a search box is harder to scan. */
+.field {
+  width: 100%;
+  max-width: 840px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--do-space-4);
+  flex-wrap: wrap;
+}
+
+.hint {
+  margin: 0;
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-sm);
+  color: var(--do-color-text-subtle);
+}
+
+.aside {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-4);
+}
+
+@media (max-width: 720px) {
+  .band {
+    padding: var(--do-space-5) var(--do-space-4);
+  }
+}
