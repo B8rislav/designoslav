@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   gap: var(--do-space-4);
+  box-sizing: border-box;
   width: 100%;
   padding: var(--do-space-3) var(--do-space-4);
   border: 1px solid var(--do-color-border);

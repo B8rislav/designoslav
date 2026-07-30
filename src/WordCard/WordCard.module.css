@@ -99,6 +99,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--do-space-3);
+  box-sizing: border-box;
   width: 100%;
   padding: var(--do-space-3) var(--do-space-5);
   border: none;

@@ -1,14 +1,12 @@
 .band {
   position: relative;
+  box-sizing: border-box;
   width: 100%;
   padding: var(--do-space-8) var(--do-space-8) var(--do-space-6);
   background-color: var(--do-color-bg);
   border-bottom: 1px solid var(--do-color-border);
-  overflow: hidden;
 }
 
-/* Diagonal hatching, barely there — it gives the band a surface without competing
-   with the content. On its own layer so the tint above stays a flat token. */
 .band::before {
   content: '';
   position: absolute;
@@ -21,9 +19,12 @@
   );
 }
 
+/* One centred column, so the kicker, the field, the hint and any toggles all hang off the
+   same measure. An earlier version let the footer run wider than the field, which left the
+   hint and the toggle stranded at the region's outer edges once the field was centred. */
 .inner {
   position: relative;
-  max-width: 1120px;
+  max-width: 840px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -40,10 +41,12 @@
   color: var(--do-color-primary);
 }
 
-/* Capped narrower than the footer: past ~800px a search box is harder to scan. */
+/* Capped at a readable measure and centred: past ~800px a search box is harder to scan,
+   so it doesn't track the full width of the region. */
 .field {
   width: 100%;
   max-width: 840px;
+  margin-inline: auto;
 }
 
 .footer {
