@@ -1,3 +1,6 @@
+export { Badge } from './Badge';
+export type { BadgeProps, BadgeTone, BadgeSize } from './Badge';
+
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
 
@@ -21,6 +24,9 @@ export type { SearchBandProps } from './SearchBand';
 
 export { DashboardCard } from './DashboardCard';
 export type { DashboardCardProps, DashboardCardVariant } from './DashboardCard';
+
+export { DeckCard } from './DeckCard';
+export type { DeckCardProps, DeckCardLegendItem } from './DeckCard';
 
 export { DailyGoal } from './DailyGoal';
 export type { DailyGoalProps } from './DailyGoal';
@@ -56,11 +62,23 @@ export type { EntryCardProps, EntryPartOfSpeech } from './EntryCard';
 export { EntryList } from './EntryList';
 export type { EntryListProps, EntryListItem } from './EntryList';
 
+export { VocabRow } from './VocabRow';
+export type { VocabRowProps } from './VocabRow';
+
+export { VocabList } from './VocabList';
+export type { VocabListProps, VocabListItem } from './VocabList';
+
 export { SectionHeading } from './SectionHeading';
 export type { SectionHeadingProps } from './SectionHeading';
 
 export { SentenceView } from './SentenceView';
 export type { SentenceViewProps, SentenceToken } from './SentenceView';
+
+export { CardTile } from './CardTile';
+export type { CardTileProps } from './CardTile';
+
+export { CardGrid } from './CardGrid';
+export type { CardGridProps, CardGridItem } from './CardGrid';
 
 export { KanjiCard } from './KanjiCard';
 export type { KanjiCardProps, KanjiReading, KanjiComponent } from './KanjiCard';

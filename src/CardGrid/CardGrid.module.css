@@ -1,0 +1,13 @@
+.grid {
+  width: 100%;
+}
+
+/**
+ * react-window positions each cell absolutely, so the gutter between tiles lives
+ * inside the cell box rather than as a margin between them.
+ */
+.cell {
+  box-sizing: border-box;
+  padding-inline-end: var(--do-space-3);
+  padding-block-end: var(--do-space-3);
+}

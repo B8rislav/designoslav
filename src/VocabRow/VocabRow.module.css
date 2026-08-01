@@ -1,0 +1,86 @@
+.row {
+  /* Accent color, overridden per tone. */
+  --_accent: var(--do-color-border-strong);
+
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-4);
+  box-sizing: border-box;
+  width: 100%;
+  /* No margin: a virtualized parent positions rows absolutely, so vertical rhythm
+     has to come from inside the row's own box. */
+  padding: var(--do-space-3) var(--do-space-4);
+  overflow: hidden;
+  border: 1px solid var(--do-color-border);
+  border-inline-start: 3px solid var(--_accent);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-sm);
+  font-family: var(--do-font-sans);
+}
+
+/* ── Tones ──────────────────────────────────────────────────────────────────── */
+.neutral {
+  --_accent: var(--do-color-border-strong);
+}
+
+.primary {
+  --_accent: var(--do-color-primary);
+}
+
+.accent {
+  --_accent: var(--do-color-accent);
+}
+
+/* ── Headword ───────────────────────────────────────────────────────────────── */
+.headwordBlock {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  width: 8.5rem;
+}
+
+.headword {
+  color: var(--do-color-text);
+  font-family: var(--do-font-serif);
+  font-size: var(--do-font-size-xl);
+  line-height: var(--do-line-height-tight);
+  /* Primary content: wraps rather than truncating. */
+  overflow-wrap: anywhere;
+}
+
+.reading {
+  color: var(--do-color-text-subtle);
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-xs);
+  overflow-wrap: anywhere;
+}
+
+/* ── Gloss ──────────────────────────────────────────────────────────────────── */
+.gloss {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--do-color-text-muted);
+  font-size: var(--do-font-size-sm);
+  /* Secondary content: one line, so rows stay a predictable height. */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ── Trailing clusters ──────────────────────────────────────────────────────── */
+.badges {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--do-space-2);
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--do-space-2);
+}

@@ -1,0 +1,81 @@
+.badge {
+  /* Tone-driven pair, overridden per tone below. */
+  --_bg: var(--do-color-border);
+  --_fg: var(--do-color-text-muted);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  border: 0;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--do-font-sans);
+  font-weight: var(--do-font-weight-medium);
+  line-height: 1;
+  /* A badge labels something else; it must never be the thing that wraps. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Tones ──────────────────────────────────────────────────────────────────── */
+.neutral {
+  --_bg: var(--do-color-border);
+  --_fg: var(--do-color-text-muted);
+}
+
+.primary {
+  --_bg: var(--do-color-primary-subtle);
+  --_fg: var(--do-color-primary);
+}
+
+.accent {
+  --_bg: var(--do-color-accent-subtle);
+  --_fg: var(--do-color-accent-active);
+}
+
+/* ── Sizes ──────────────────────────────────────────────────────────────────── */
+.s {
+  height: 20px;
+  padding: 0 var(--do-space-2);
+  font-size: var(--do-font-size-xs);
+}
+
+.m {
+  height: 24px;
+  padding: 0 var(--do-space-3);
+  font-size: var(--do-font-size-sm);
+}
+
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+}
+
+/* ── Interactive (as="button") ──────────────────────────────────────────────── */
+.interactive {
+  cursor: pointer;
+  transition:
+    filter var(--do-duration-fast) var(--do-ease-standard),
+    box-shadow var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.interactive:hover:not(:disabled) {
+  filter: brightness(0.96);
+  box-shadow: var(--do-shadow-sm);
+}
+
+.interactive:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.interactive:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

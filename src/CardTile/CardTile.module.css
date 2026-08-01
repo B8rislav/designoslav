@@ -1,0 +1,106 @@
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--do-space-2);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--do-space-4);
+  overflow: hidden;
+  border: 1px solid var(--do-color-border);
+  border-radius: var(--do-radius-lg);
+  background-color: var(--do-color-surface-raised);
+  box-shadow: var(--do-shadow-sm);
+  font-family: var(--do-font-sans);
+  text-align: center;
+}
+
+/* ── Status dot ─────────────────────────────────────────────────────────────── */
+.dot {
+  position: absolute;
+  inset-block-start: var(--do-space-3);
+  inset-inline-end: var(--do-space-3);
+  width: 8px;
+  height: 8px;
+  border-radius: var(--do-radius-pill);
+}
+
+.dot.neutral {
+  background-color: var(--do-color-border-strong);
+}
+
+.dot.primary {
+  background-color: var(--do-color-primary);
+}
+
+.dot.accent {
+  background-color: var(--do-color-accent);
+}
+
+/* ── Glyph ──────────────────────────────────────────────────────────────────── */
+.glyph {
+  margin-block: auto;
+  color: var(--do-color-text);
+  font-family: var(--do-font-serif);
+  /* Deliberately not a token: the glyph is the tile's subject, larger than any
+     text size in the scale. */
+  font-size: 3rem;
+  line-height: 1;
+}
+
+/* ── Body ───────────────────────────────────────────────────────────────────── */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  min-width: 0;
+}
+
+.meaning {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--do-color-text-muted);
+  font-size: var(--do-font-size-sm);
+  /* Secondary: one line, so tiles stay a uniform height in the grid. */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reading {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--do-color-text-subtle);
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-xs);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--do-space-2);
+  width: 100%;
+  min-width: 0;
+  padding-block-start: var(--do-space-2);
+  border-block-start: 1px solid var(--do-color-border);
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-2);
+  min-width: 0;
+}
+
+.status {
+  flex: none;
+  color: var(--do-color-text-muted);
+  font-size: var(--do-font-size-xs);
+  white-space: nowrap;
+}

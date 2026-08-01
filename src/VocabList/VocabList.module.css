@@ -1,0 +1,22 @@
+.list {
+  width: 100%;
+}
+
+/**
+ * react-window positions each row absolutely at an exact height, so the gap between
+ * rows has to live inside the slot rather than as a margin between them.
+ */
+.rowSlot {
+  box-sizing: border-box;
+  padding-bottom: var(--do-space-3);
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--do-color-text-muted);
+  font-family: var(--do-font-sans);
+  font-size: var(--do-font-size-sm);
+}

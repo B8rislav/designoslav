@@ -1,7 +1,7 @@
 {
   "name": "designoslav",
-  "version": "0.1.2",
-  "description": "Designoslav — the Kotoba Lab design system. Celadon Zen: soft neutrals, one deep green accent.",
+  "version": "0.1.3",
+  "description": "Designoslav \u2014 the Kotoba Lab design system. Celadon Zen: soft neutrals, one deep green accent.",
   "type": "module",
   "license": "MIT",
   "sideEffects": [
@@ -25,7 +25,8 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-window": "^2.2.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -45,6 +46,7 @@
     "prettier": "^3.8.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-window": "^2.3.0",
     "storybook": "^10.4.6",
     "typescript": "^5",
     "typescript-eslint": "^8.63.0",

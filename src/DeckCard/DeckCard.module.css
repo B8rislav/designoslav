@@ -1,0 +1,227 @@
+.deck {
+  position: relative;
+  gap: var(--do-space-4);
+  transition:
+    border-color var(--do-duration-fast) var(--do-ease-standard),
+    box-shadow var(--do-duration-fast) var(--do-ease-standard);
+}
+
+.deck.open {
+  border-color: var(--do-color-primary);
+  box-shadow: var(--do-shadow-md);
+}
+
+/**
+ * The selection control, stretched over the whole card. It sits *below* the footer
+ * (which holds the CTA) in z-order, so the action stays independently clickable and
+ * the two never nest. Transparent but focusable — the focus ring is drawn on the card.
+ */
+.selectOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 0;
+  border-radius: var(--do-radius-lg);
+  background: transparent;
+  cursor: pointer;
+}
+
+.selectOverlay:focus-visible {
+  outline: 2px solid var(--do-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.deck:hover:not(.open) .selectOverlay {
+  background-color: color-mix(in srgb, var(--do-color-primary-subtle) 40%, transparent);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-3);
+  min-width: 0;
+}
+
+.glyph {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--do-radius-md);
+  font-family: var(--do-font-serif);
+  font-size: var(--do-font-size-xl);
+  line-height: 1;
+}
+
+.glyph.neutral {
+  background-color: var(--do-color-border);
+  color: var(--do-color-text-muted);
+}
+
+.glyph.primary {
+  background-color: var(--do-color-primary-subtle);
+  color: var(--do-color-primary);
+}
+
+.glyph.accent {
+  background-color: var(--do-color-accent-subtle);
+  color: var(--do-color-accent-active);
+}
+
+.naming {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--do-space-2);
+  min-width: 0;
+}
+
+.title {
+  color: var(--do-color-text);
+  font-size: var(--do-font-size-lg);
+  font-weight: var(--do-font-weight-semibold);
+  /* Primary content: wraps rather than truncating. */
+  overflow-wrap: anywhere;
+}
+
+.nativeTitle {
+  flex: none;
+  color: var(--do-color-text-subtle);
+  font-family: var(--do-font-cjk);
+  font-size: var(--do-font-size-sm);
+}
+
+.caption {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--do-color-text-muted);
+  font-size: var(--do-font-size-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.openBadge {
+  position: relative;
+  z-index: 2;
+  flex: none;
+}
+
+/* ── Today's workload ───────────────────────────────────────────────────────── */
+.today {
+  display: flex;
+  flex-direction: column;
+  gap: var(--do-space-2);
+  padding-top: var(--do-space-4);
+  border-top: 1px solid var(--do-color-border);
+}
+
+.todayRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--do-space-2);
+  min-width: 0;
+}
+
+.todayLabel {
+  flex: none;
+  color: var(--do-color-text-subtle);
+  font-size: var(--do-font-size-xs);
+  font-weight: var(--do-font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.todayValue {
+  color: var(--do-color-text);
+  font-size: var(--do-font-size-sm);
+  font-weight: var(--do-font-weight-semibold);
+}
+
+.progressLabel {
+  min-width: 0;
+  margin-inline-start: auto;
+  overflow: hidden;
+  color: var(--do-color-text-muted);
+  font-size: var(--do-font-size-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track {
+  overflow: hidden;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-border);
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--do-radius-pill);
+  background-color: var(--do-color-primary);
+  transition: inline-size var(--do-duration-normal) var(--do-ease-standard);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--do-space-3);
+  min-width: 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--do-space-4);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--do-space-2);
+  color: var(--do-color-text-muted);
+  font-size: var(--do-font-size-sm);
+}
+
+.dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--do-radius-pill);
+}
+
+.dot.neutral {
+  background-color: var(--do-color-border-strong);
+}
+
+.dot.primary {
+  background-color: var(--do-color-primary);
+}
+
+.dot.accent {
+  background-color: var(--do-color-accent);
+}
+
+/* Raised above the selection overlay so the CTA stays its own control. */
+.action {
+  position: relative;
+  z-index: 2;
+  flex: none;
+}

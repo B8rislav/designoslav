@@ -75,9 +75,10 @@ src/
     Button.module.css   styles (CSS Module)
     Button.stories.tsx  stories
     index.ts            barrel: re-exports component + its types
-  DailyGoal/ DashboardCard/ EntryCard/ EntryList/ KanjiCard/ SearchField/
-  SearchOption/ SearchOptionList/ SectionHeading/ SegmentedControl/
-  SentenceView/ StatTile/ StreakBadge/ ToggleGroup/ WordCard/
+  Badge/ CardGrid/ CardTile/ DailyGoal/ DashboardCard/ DeckCard/ EntryCard/
+  EntryList/ KanjiCard/ SearchField/ SearchOption/ SearchOptionList/
+  SectionHeading/ SegmentedControl/ SentenceView/ StatTile/ StreakBadge/
+  ToggleGroup/ VocabList/ VocabRow/ WordCard/
                         same four-file shape
   shared/
     useRadioGroupKeys.ts  radiogroup arrow/Home/End behavior (selection follows focus)
@@ -150,11 +151,20 @@ The input keeps focus and owns the keys; the list is presentation. See
 [SearchOptionList.tsx](src/SearchOptionList/SearchOptionList.tsx). When focus *can* move
 into the widget, prefer roving `tabIndex`.
 
-**3. Overlays are bounded; in-flow lists are free.** Any list rendered as an overlay gets
+**3. Overlays are bounded; in-flow lists are free; virtualized collections are the
+exception.** Any list rendered as an overlay gets
 `max-height: var(--do-size-overlay-list-max-height)` + `overflow-y: auto`, and must scroll
 its active item into view (`scrollIntoView({ block: 'nearest' })`) or the highlight can
 vanish off-screen. Lists that flow in the page (EntryList) stay unbounded — a nested
 scrollport is worse than letting the page scroll. Both stay overridable via `className`.
+
+The one sanctioned exception is **virtualization**. `VocabList` and `CardGrid` render only
+what fits, which is impossible without a known viewport, so they take a required `height`
+and own a scroll container. Take that exception only when the collection is genuinely
+unbounded (a user's entire saved vocabulary); for anything that fits on a page, use
+`EntryList` and let the window scroll. A component that owns a scrollport must say so in
+its doc comment, as those two do — jpdict's own "the window is the only scroll surface"
+rule has a matching carve-out, and neither should drift from the other.
 
 **4. Wrap primary content, clamp secondary.** Primary content — the headword, the Japanese
 text, anything the user is deciding *about* — wraps and never truncates. Secondary lines
